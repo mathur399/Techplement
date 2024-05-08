@@ -1,0 +1,87 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Question {
+    private String question;
+    private ArrayList<String> options;
+    private int correctAnswerIndex;
+
+    public Question(String question, ArrayList<String> options, int correctAnswerIndex) {
+        this.question = question;
+        this.options = options;
+        this.correctAnswerIndex = correctAnswerIndex;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public ArrayList<String> getOptions() {
+        return options;
+    }
+
+    public int getCorrectAnswerIndex() {
+        return correctAnswerIndex;
+    }
+}
+
+class Quiz {
+    private String title;
+    private ArrayList<Question> questions;
+
+    public Quiz(String title) {
+        this.title = title;
+        this.questions = new ArrayList<>();
+    }
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
+
+    public void takeQuiz() {
+        Scanner scanner = new Scanner(System.in);
+        int score = 0;
+        int totalQuestions = questions.size();
+
+        for (Question question : questions) {
+            System.out.println(question.getQuestion());
+            ArrayList<String> options = question.getOptions();
+            for (int i = 0; i < options.size(); i++) {
+                System.out.println((i + 1) + ". " + options.get(i));
+            }
+            System.out.print("Your answer (enter option number): ");
+            int userAnswerIndex = scanner.nextInt() - 1;
+            if (userAnswerIndex == question.getCorrectAnswerIndex()) {
+                score++;
+            }
+        }
+
+        System.out.println("Your score: " + score + "/" + totalQuestions);
+    }
+}
+
+public class Main{
+    public static void main(String[] args) {
+        Quiz quiz = new Quiz("Tech Quiz");
+
+     
+        ArrayList<String> options1 = new ArrayList<>();
+        options1.add("Central Processing Unit");
+        options1.add("Central Process Unit");
+        options1.add("Computer Personal Unit");
+        Question question1 = new Question("What does CPU stand for?", options1, 0);
+
+        ArrayList<String> options2 = new ArrayList<>();
+        options2.add("London");
+        options2.add("Berlin");
+        options2.add("Paris");
+        Question question2 = new Question("What is the capital of France?", options2, 2);
+
+        quiz.addQuestion(question1);
+        quiz.addQuestion(question2);
+
+       
+        quiz.takeQuiz();
+    }
+}
